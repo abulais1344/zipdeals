@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS public.sellers (
   seller_name     TEXT NOT NULL,
   phone           TEXT NOT NULL,
   email           TEXT,
+  password_reset_token TEXT,
+  password_reset_expires_at TIMESTAMPTZ,
   city            TEXT,
   taluka          TEXT,
   bio             TEXT,
@@ -25,6 +27,7 @@ CREATE TABLE IF NOT EXISTS public.sellers (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_sellers_username ON public.sellers(username);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_sellers_email_unique ON public.sellers ((lower(email))) WHERE email IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_sellers_created_at ON public.sellers(created_at DESC);
 
 -- Link products to sellers for durable ownership mapping.

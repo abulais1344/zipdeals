@@ -12,6 +12,7 @@ export async function POST(req: Request) {
       password?: string;
       seller_name?: string;
       phone?: string;
+      email?: string;
       city?: string;
       taluka?: string;
     };
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
     const password = body.password ?? "";
     const sellerName = (body.seller_name ?? "").trim();
     const phone = normalizePhone(body.phone ?? "");
+    const email = (body.email ?? "").trim().toLowerCase();
     const city = (body.city ?? "").trim();
     const taluka = (body.taluka ?? "").trim();
 
@@ -37,6 +39,10 @@ export async function POST(req: Request) {
 
     if (phone.length < 10 || phone.length > 15) {
       return Response.json({ error: "Enter a valid phone number." }, { status: 400 });
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return Response.json({ error: "Enter a valid email address." }, { status: 400 });
     }
 
     const supabase = createAdminClient();
@@ -61,6 +67,18 @@ export async function POST(req: Request) {
       return Response.json({ error: "Phone number already registered." }, { status: 409 });
     }
 
+    if (email) {
+      const { data: emailExists } = await supabase
+        .from("sellers")
+        .select("id")
+        .ilike("email", email)
+        .maybeSingle();
+
+      if (emailExists) {
+        return Response.json({ error: "Email already registered." }, { status: 409 });
+      }
+    }
+
     const passwordHash = await bcrypt.hash(password, 10);
 
     const { error: insertError } = await supabase.from("sellers").insert({
@@ -68,6 +86,7 @@ export async function POST(req: Request) {
       password_hash: passwordHash,
       seller_name: sellerName,
       phone,
+      email: email || null,
       city,
       taluka: taluka || null,
       verified_at: null,

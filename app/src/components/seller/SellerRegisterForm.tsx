@@ -11,6 +11,7 @@ export default function SellerRegisterForm() {
     seller_name: "",
     username: "",
     phone: "",
+    email: "",
     city: "",
     taluka: "",
     password: "",
@@ -46,6 +47,7 @@ export default function SellerRegisterForm() {
           seller_name: form.seller_name,
           username: form.username,
           phone: form.phone,
+          email: form.email,
           city: form.city,
           taluka: form.taluka,
           password: form.password,
@@ -82,6 +84,7 @@ export default function SellerRegisterForm() {
             <Input label="Store / Seller Name" value={form.seller_name} onChange={(v) => update("seller_name", v)} placeholder="Delux Furniture" required />
             <Input label="Username" value={form.username} onChange={(v) => update("username", v.toLowerCase())} placeholder="delux_furniture" required />
             <Input label="Phone" value={form.phone} onChange={(v) => update("phone", v)} placeholder="9876543210" required />
+            <Input label="Recovery Email (optional)" value={form.email} onChange={(v) => update("email", v)} placeholder="owner@example.com" />
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">City</label>

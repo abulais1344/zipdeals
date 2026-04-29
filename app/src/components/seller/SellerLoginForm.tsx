@@ -76,6 +76,11 @@ export default function SellerLoginForm() {
                 required
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               />
+              <div className="mt-2 text-right">
+                <Link href="/seller/forgot-password" className="text-xs text-orange-600 hover:text-orange-700 font-semibold">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
 
             {error && (
