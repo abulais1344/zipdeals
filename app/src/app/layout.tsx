@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   description:
     "Discover genuine clearance deals and bulk stock near you. Contact sellers directly on WhatsApp. No middlemen.",
   keywords: "clearance sale, local deals, bulk stock, wholesale, discount",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default async function RootLayout({
