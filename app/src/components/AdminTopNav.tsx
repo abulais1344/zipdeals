@@ -1,5 +1,6 @@
 import Link from "next/link";
 import IdleLogout from "@/components/IdleLogout";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 interface Props {
   current: "pending" | "active" | "analytics" | "sellers" | "schema";
@@ -13,13 +14,29 @@ const links: Array<{ key: Props["current"]; label: string; href: string }> = [
   { key: "schema", label: "Schema", href: "/admin/schema" },
 ];
 
-export default function AdminTopNav({ current }: Props) {
+export default async function AdminTopNav({ current }: Props) {
+  const supabase = createAdminClient();
+
+  const [{ count: pendingListingCount }, { count: pendingSellerCount }] = await Promise.all([
+    supabase.from("products").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("sellers").select("id", { count: "exact", head: true }).is("verified_at", null),
+  ]);
+
+  const pendingListings = pendingListingCount ?? 0;
+  const pendingSellers = pendingSellerCount ?? 0;
+  const pendingApprovals = pendingListings + pendingSellers;
+
   return (
     <div className="mb-5 rounded-xl border border-slate-200 bg-white px-3 py-3 sm:px-4">
       <IdleLogout logoutEndpoint="/api/admin/logout" redirectTo="/admin/login" />
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex items-center rounded-full bg-slate-100 text-slate-700 px-3 py-1 text-xs font-semibold tracking-wide">
-          ZipDeals Admin Console
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center rounded-full bg-slate-100 text-slate-700 px-3 py-1 text-xs font-semibold tracking-wide">
+            ZipDeals Admin Console
+          </div>
+          <div className="inline-flex items-center rounded-full bg-orange-100 text-orange-800 px-3 py-1 text-xs font-semibold tracking-wide">
+            Pending approvals: {pendingApprovals}
+          </div>
         </div>
 
         <form action="/api/admin/logout" method="post">
@@ -46,6 +63,17 @@ export default function AdminTopNav({ current }: Props) {
               }`}
             >
               {link.label}
+              {(link.key === "pending" || link.key === "sellers") && (
+                <span
+                  className={`ml-2 inline-flex min-w-[20px] justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                    active
+                      ? "bg-white/20 text-white"
+                      : "bg-orange-100 text-orange-800"
+                  }`}
+                >
+                  {link.key === "pending" ? pendingListings : pendingSellers}
+                </span>
+              )}
             </Link>
           );
         })}

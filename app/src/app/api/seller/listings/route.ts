@@ -1,6 +1,7 @@
 import { getSellerSession } from "@/lib/seller-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CATEGORIES, CITIES } from "@/lib/constants";
+import { buildAdminUrl, sendAdminNotificationEmail } from "@/lib/admin-notifications";
 
 const VALID_CATEGORIES = new Set<string>(CATEGORIES);
 const VALID_CITIES = new Set<string>(CITIES);
@@ -98,6 +99,24 @@ export async function POST(req: Request) {
   if (insertError) {
     return Response.json({ error: insertError.message }, { status: 500 });
   }
+
+  await sendAdminNotificationEmail({
+    subject: `New listing pending approval: ${title.trim()}`,
+    html: `
+      <p>A new listing is pending admin approval.</p>
+      <ul>
+        <li><strong>Title:</strong> ${title.trim()}</li>
+        <li><strong>Seller:</strong> ${seller.seller_name}</li>
+        <li><strong>Phone:</strong> ${seller.phone}</li>
+        <li><strong>Category:</strong> ${category}</li>
+        <li><strong>City:</strong> ${city}${typeof taluka === "string" && taluka ? `, ${taluka}` : ""}</li>
+        <li><strong>Price:</strong> INR ${price}</li>
+      </ul>
+      <p>
+        <a href="${buildAdminUrl(req, "/admin/pending")}">Open pending listings</a>
+      </p>
+    `,
+  });
 
   return Response.json({ success: true }, { status: 201 });
 }

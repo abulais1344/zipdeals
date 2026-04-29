@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { buildAdminUrl, sendAdminNotificationEmail } from "@/lib/admin-notifications";
 
 function normalizePhone(phone: string): string {
   return phone.replace(/\D/g, "");
@@ -95,6 +96,23 @@ export async function POST(req: Request) {
     if (insertError) {
       return Response.json({ error: insertError.message }, { status: 500 });
     }
+
+    await sendAdminNotificationEmail({
+      subject: `New seller registration: ${sellerName}`,
+      html: `
+        <p>A new seller registration is awaiting approval.</p>
+        <ul>
+          <li><strong>Name:</strong> ${sellerName}</li>
+          <li><strong>Username:</strong> @${username}</li>
+          <li><strong>Phone:</strong> ${phone}</li>
+          <li><strong>Email:</strong> ${email || "Not provided"}</li>
+          <li><strong>City:</strong> ${city}${taluka ? `, ${taluka}` : ""}</li>
+        </ul>
+        <p>
+          <a href="${buildAdminUrl(req, "/admin/sellers")}">Open seller approvals</a>
+        </p>
+      `,
+    });
 
     return Response.json({
       success: true,
