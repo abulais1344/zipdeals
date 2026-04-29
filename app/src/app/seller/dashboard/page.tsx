@@ -8,6 +8,7 @@ import SellerLogoutButton from "@/components/SellerLogoutButton";
 import MarkAsSoldButton from "@/components/MarkAsSoldButton";
 import IdleLogout from "@/components/IdleLogout";
 import DeleteListingButton from "@/components/DeleteListingButton";
+import SellerRecoveryEmailCard from "@/components/seller/SellerRecoveryEmailCard";
 
 interface Listing {
   id: string;
@@ -137,6 +138,8 @@ export default async function SellerDashboard() {
             </ul>
           </div>
         )}
+
+        <SellerRecoveryEmailCard initialEmail={seller?.email ?? null} />
 
         {/* Listings Table */}
         {sellerListings.length === 0 ? (

@@ -5,6 +5,7 @@ export interface SellerProfileSummary {
   id: string;
   seller_name: string;
   phone: string;
+  email: string | null;
 }
 
 export interface SellerDashboardListing {
@@ -26,7 +27,7 @@ async function getSellerById(sellerId: string): Promise<SellerProfileSummary | n
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("sellers")
-    .select("id, seller_name, phone")
+    .select("id, seller_name, phone, email")
     .eq("id", sellerId)
     .single();
 
