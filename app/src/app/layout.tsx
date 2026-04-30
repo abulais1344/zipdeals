@@ -11,11 +11,37 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://zipdeals.in";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: "ZipDeals — Local Clearance Deals & Bulk Stock",
   description:
     "Discover genuine clearance deals and bulk stock near you. Contact sellers directly on WhatsApp. No middlemen.",
   keywords: "clearance sale, local deals, bulk stock, wholesale, discount",
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "ZipDeals",
+    title: "ZipDeals | Local Clearance Deals & Bulk Stock",
+    description:
+      "Discover local clearance deals and bulk stock from verified sellers. Contact directly on WhatsApp and move inventory faster.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "ZipDeals logo and brand preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ZipDeals | Local Clearance Deals & Bulk Stock",
+    description:
+      "Discover local clearance deals and bulk stock from verified sellers. Contact directly on WhatsApp and move inventory faster.",
+    images: ["/twitter-image"],
+  },
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
