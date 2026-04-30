@@ -33,11 +33,19 @@ export default function OpenGraphImage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "64px",
-                fontWeight: 800,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              ⚡
+              <svg width="76" height="76" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="boltOg" x1="22" y1="10" x2="42" y2="53" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stopColor="#fb923c" />
+                    <stop offset="1" stopColor="#ea580c" />
+                  </linearGradient>
+                </defs>
+                <path d="M36 9L20 34h12l-2 21 14-23H33z" fill="url(#boltOg)" />
+              </svg>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ fontSize: "64px", fontWeight: 800, lineHeight: 1.05 }}>ZipDeals</div>
