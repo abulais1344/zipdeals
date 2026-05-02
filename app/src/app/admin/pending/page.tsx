@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getAdminSession } from "@/lib/admin-auth";
 import { getSellerProfileHrefMap } from "@/lib/seller-profile-links";
 import TrackedSellerProfileLink from "@/components/TrackedSellerProfileLink";
+import ListingImageGallery from "@/components/ListingImageGallery";
 import { redirect } from "next/navigation";
 import AdminTopNav from "@/components/AdminTopNav";
 
@@ -56,16 +57,17 @@ export default async function PendingListingsPage() {
           {pendingListings.map((item) => (
             <div key={item.id} className="bg-white border border-gray-200 rounded-xl p-4">
               <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4">
-                <div className="relative w-full h-36 bg-gray-100 rounded-lg overflow-hidden">
-                  {item.image_urls?.[0] ? (
-                    <Image
-                      src={item.image_urls[0]}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 140px"
-                      className="object-cover"
-                    />
-                  ) : null}
+                <div className="rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                  <ListingImageGallery
+                    imageUrls={item.image_urls ?? []}
+                    title={item.title}
+                    mainWrapperClassName="relative w-full h-36 bg-gray-100"
+                    thumbnailsWrapperClassName="flex gap-2 p-2 overflow-x-auto"
+                    thumbnailClassName="relative w-12 h-12 flex-shrink-0 rounded-md overflow-hidden border transition-colors"
+                    sizes="(max-width: 768px) 100vw, 140px"
+                    imageClassName="object-cover"
+                    enableLightbox
+                  />
                 </div>
 
                 <div>

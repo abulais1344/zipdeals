@@ -1,12 +1,13 @@
 import { getSellerSession } from "@/lib/seller-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { MAX_IMAGES } from "@/lib/constants";
 
 async function verifyOwnership(listingId: string, sellerId: string) {
   const supabase = createAdminClient();
 
   const { data: listing, error: listingError } = await supabase
     .from("products")
-    .select("id,title,description,price,original_price,category,city,taluka,is_bulk,min_order_qty,bulk_price,status,seller_profile_id")
+    .select("id,title,description,price,original_price,category,city,taluka,is_bulk,min_order_qty,bulk_price,status,seller_profile_id,image_urls")
     .eq("id", listingId)
     .single();
 
@@ -63,6 +64,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
     is_bulk?: boolean;
     min_order_qty?: number | null;
     bulk_price?: number | null;
+    image_urls?: string[];
   };
 
   const title = (body.title ?? "").trim();
@@ -85,6 +87,17 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
   const isBulk = Boolean(body.is_bulk);
   const minOrderQty = isBulk ? (body.min_order_qty ? Number(body.min_order_qty) : null) : null;
   const bulkPrice = isBulk ? (body.bulk_price ? Number(body.bulk_price) : null) : null;
+  const imageUrls = Array.isArray(body.image_urls)
+    ? body.image_urls.filter((url): url is string => typeof url === "string" && url.trim().length > 0)
+    : ownership.listing.image_urls ?? [];
+
+  if (imageUrls.length === 0) {
+    return Response.json({ error: "At least one image is required." }, { status: 400 });
+  }
+
+  if (imageUrls.length > MAX_IMAGES) {
+    return Response.json({ error: `Maximum ${MAX_IMAGES} images are allowed.` }, { status: 400 });
+  }
 
   if (minOrderQty !== null && minOrderQty <= 0) {
     return Response.json({ error: "Min order qty must be positive." }, { status: 400 });
@@ -105,6 +118,7 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
       category,
       city,
       taluka: taluka || null,
+      image_urls: imageUrls,
       is_bulk: isBulk,
       min_order_qty: minOrderQty,
       bulk_price: bulkPrice,

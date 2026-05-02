@@ -2,11 +2,11 @@ import { createClient } from "@/lib/supabase/server";
 import { getSellerProfileHref } from "@/lib/seller-profile-links";
 import { notFound } from "next/navigation";
 import { Product } from "@/lib/types";
-import Image from "next/image";
 import WhatsAppButton from "../../../components/WhatsAppButton";
 import ReportButton from "../../../components/ReportButton";
 import ViewTracker from "../../../components/ViewTracker";
 import TrackedSellerProfileLink from "@/components/TrackedSellerProfileLink";
+import ListingImageGallery from "@/components/ListingImageGallery";
 import ListingCard from "@/components/ListingCard";
 import type { Metadata } from "next";
 import { MapPin, Tag, Clock, User, ShieldCheck, Star } from "lucide-react";
@@ -173,27 +173,7 @@ export default async function ListingPage({ params }: Props) {
                 BULK DEAL
               </div>
             )}
-            {product.image_urls.length > 0 && (
-              <div className="aspect-[4/3] relative bg-gray-100">
-                <Image
-                  src={product.image_urls[0]}
-                  alt={product.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 768px"
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            )}
-            {product.image_urls.length > 1 && (
-              <div className="flex gap-2 p-3 overflow-x-auto">
-                {product.image_urls.slice(1).map((url, idx) => (
-                  <div key={idx} className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200">
-                    <Image src={url} alt={`${product.title} ${idx + 2}`} fill sizes="64px" className="object-cover" />
-                  </div>
-                ))}
-              </div>
-            )}
+            <ListingImageGallery imageUrls={product.image_urls} title={product.title} />
           </div>
 
           {/* Details */}

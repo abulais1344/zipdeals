@@ -1,6 +1,6 @@
 import { getSellerSession } from "@/lib/seller-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { CATEGORIES, CITIES } from "@/lib/constants";
+import { CATEGORIES, CITIES, MAX_IMAGES } from "@/lib/constants";
 import { buildAdminUrl, sendAdminNotificationEmail } from "@/lib/admin-notifications";
 
 const VALID_CATEGORIES = new Set<string>(CATEGORIES);
@@ -48,6 +48,9 @@ export async function POST(req: Request) {
   }
   if (!Array.isArray(image_urls) || image_urls.length === 0) {
     return Response.json({ error: "At least one image is required." }, { status: 400 });
+  }
+  if (image_urls.length > MAX_IMAGES) {
+    return Response.json({ error: `Maximum ${MAX_IMAGES} images are allowed.` }, { status: 400 });
   }
   if (typeof category !== "string" || !VALID_CATEGORIES.has(category)) {
     return Response.json({ error: "Invalid category." }, { status: 400 });

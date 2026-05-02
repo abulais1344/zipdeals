@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { CATEGORIES, CITIES, TALUKAS } from "@/lib/constants";
+import Image from "next/image";
+import { createClient } from "@/lib/supabase/client";
+import { CATEGORIES, CITIES, MAX_IMAGE_SIZE_MB, MAX_IMAGES, TALUKAS } from "@/lib/constants";
 import IdleLogout from "@/components/IdleLogout";
+import { ImagePlus, X } from "lucide-react";
 
 type ListingForm = {
   title: string;
@@ -36,9 +39,13 @@ export default function SellerEditListingPage() {
   const params = useParams<{ id: string }>();
   const listingId = params?.id;
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState<ListingForm>(INITIAL);
   const [initialForm, setInitialForm] = useState<ListingForm>(INITIAL);
+  const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const [newImagePreviews, setNewImagePreviews] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +86,7 @@ export default function SellerEditListingPage() {
 
         setForm(nextForm);
         setInitialForm(nextForm);
+        setExistingImageUrls(listing.image_urls ?? []);
       } catch {
         setError("Unable to load listing.");
       } finally {
@@ -89,8 +97,65 @@ export default function SellerEditListingPage() {
     loadListing();
   }, [listingId, router]);
 
+  useEffect(() => {
+    return () => {
+      newImagePreviews.forEach((preview) => URL.revokeObjectURL(preview));
+    };
+  }, [newImagePreviews]);
+
   function setField(key: keyof ListingForm, value: string | boolean) {
     setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    const remaining = MAX_IMAGES - (existingImageUrls.length + newImages.length);
+    const toAdd = files.slice(0, remaining);
+    const invalid = toAdd.filter((file) => file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024);
+
+    if (invalid.length > 0) {
+      setError(`Each image must be under ${MAX_IMAGE_SIZE_MB}MB`);
+      return;
+    }
+
+    setNewImages((prev) => [...prev, ...toAdd]);
+    setNewImagePreviews((prev) => [...prev, ...toAdd.map((file) => URL.createObjectURL(file))]);
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  function removeExistingImage(index: number) {
+    setExistingImageUrls((prev) => prev.filter((_, currentIndex) => currentIndex !== index));
+  }
+
+  function removeNewImage(index: number) {
+    setNewImages((prev) => prev.filter((_, currentIndex) => currentIndex !== index));
+    setNewImagePreviews((prev) => {
+      URL.revokeObjectURL(prev[index]);
+      return prev.filter((_, currentIndex) => currentIndex !== index);
+    });
+  }
+
+  async function uploadImages(): Promise<string[]> {
+    const supabase = createClient();
+    const urls: string[] = [];
+
+    for (const file of newImages) {
+      const ext = file.name.split(".").pop();
+      const path = `public/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from("listing-images")
+        .upload(path, file, { contentType: file.type, upsert: false });
+
+      if (uploadError) {
+        throw new Error(`Image upload failed: ${uploadError.message}`);
+      }
+
+      const { data } = supabase.storage.from("listing-images").getPublicUrl(path);
+      urls.push(data.publicUrl);
+    }
+
+    return urls;
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -107,9 +172,17 @@ export default function SellerEditListingPage() {
       return;
     }
 
+    if (existingImageUrls.length + newImages.length === 0) {
+      setError("Please keep at least one image for the listing.");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
+      const uploadedImageUrls = await uploadImages();
+      const imageUrls = [...existingImageUrls, ...uploadedImageUrls];
+
       const res = await fetch(`/api/seller/listings/${listingId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -121,6 +194,7 @@ export default function SellerEditListingPage() {
           category: form.category,
           city: form.city,
           taluka: form.taluka || null,
+          image_urls: imageUrls,
           is_bulk: form.is_bulk,
           min_order_qty: form.is_bulk && form.min_order_qty ? Number(form.min_order_qty) : null,
           bulk_price: form.is_bulk && form.bulk_price ? Number(form.bulk_price) : null,
@@ -148,6 +222,7 @@ export default function SellerEditListingPage() {
   const originalPrice = Number(form.original_price || 0);
   const hasValidDiscount = salePrice > 0 && originalPrice > 0 && originalPrice > salePrice;
   const discountPercent = hasValidDiscount ? Math.round(((originalPrice - salePrice) / originalPrice) * 100) : null;
+  const totalImages = existingImageUrls.length + newImages.length;
 
   return (
     <div data-seller-app-page="true" className="min-h-screen bg-gradient-to-b from-orange-50 via-white to-white py-8 px-4">
@@ -187,6 +262,57 @@ export default function SellerEditListingPage() {
           <p className="text-sm text-gray-500">Loading listing...</p>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            <section className="rounded-xl border border-gray-200 p-4">
+              <h2 className="text-sm font-semibold text-gray-900 mb-3">Photos</h2>
+              <p className="text-sm text-gray-500 mb-4">Keep clear product images. You can keep, remove, or add up to {MAX_IMAGES} images.</p>
+              <div className="flex flex-wrap gap-3">
+                {existingImageUrls.map((src, idx) => (
+                  <div key={src} className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+                    <Image src={src} alt={`Existing image ${idx + 1}`} fill className="object-cover" sizes="96px" />
+                    <button
+                      type="button"
+                      onClick={() => removeExistingImage(idx)}
+                      className="absolute top-1 right-1 bg-black/60 rounded-full p-1 text-white hover:bg-black"
+                      aria-label={`Remove existing image ${idx + 1}`}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ))}
+                {newImagePreviews.map((src, idx) => (
+                  <div key={src} className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+                    <Image src={src} alt={`New image ${idx + 1}`} fill className="object-cover" sizes="96px" unoptimized />
+                    <button
+                      type="button"
+                      onClick={() => removeNewImage(idx)}
+                      className="absolute top-1 right-1 bg-black/60 rounded-full p-1 text-white hover:bg-black"
+                      aria-label={`Remove new image ${idx + 1}`}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ))}
+                {totalImages < MAX_IMAGES && (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-orange-400 hover:text-orange-400 transition-colors"
+                  >
+                    <ImagePlus size={20} />
+                    <span className="text-xs mt-1">Add</span>
+                  </button>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                className="hidden"
+                onChange={handleImageSelect}
+              />
+            </section>
+
             <section className="rounded-xl border border-gray-200 p-4">
               <h2 className="text-sm font-semibold text-gray-900 mb-3">Basic Information</h2>
               <div className="space-y-4">
