@@ -20,6 +20,17 @@ const HOME_LISTING_SELECT =
 
 export default async function HomePage() {
   const supabase = await createClient();
+  const now = new Date();
+  const todayEnd = new Date(now);
+  todayEnd.setHours(23, 59, 0, 0);
+  const todayNinePm = new Date(now);
+  todayNinePm.setHours(21, 0, 0, 0);
+
+  const LOCAL_DEAL_TYPES: Array<"Limited Time" | "Today Only" | "Clearance"> = [
+    "Limited Time",
+    "Today Only",
+    "Clearance",
+  ];
 
   const { data: latestDeals } = await supabase
     .from("products")
@@ -36,6 +47,14 @@ export default async function HomePage() {
     .order("created_at", { ascending: false })
     .limit(4);
 
+  const { data: cityDeals } = await supabase
+    .from("products")
+    .select(HOME_LISTING_SELECT)
+    .eq("status", "active")
+    .eq("city", "Nanded")
+    .order("created_at", { ascending: false })
+    .limit(3);
+
   const { count: activeListingsCount } = await supabase
     .from("products")
     .select("id", { count: "exact", head: true })
@@ -43,8 +62,19 @@ export default async function HomePage() {
 
   const latest = (latestDeals ?? []) as Product[];
   const bulk = (bulkDeals ?? []) as Product[];
+  const localCityDeals = ((cityDeals ?? []) as Product[]).map((product, index) => ({
+    ...product,
+    dealType: LOCAL_DEAL_TYPES[index % LOCAL_DEAL_TYPES.length],
+    validTill:
+      index === 0
+        ? todayEnd.toISOString()
+        : index === 1
+          ? todayNinePm.toISOString()
+          : todayEnd.toISOString(),
+  }));
   const liveListings = activeListingsCount ?? 0;
   const sellerProfileHrefs = await getSellerProfileHrefMap([
+    ...localCityDeals.map((product) => product.seller_phone),
     ...latest.map((product) => product.seller_phone),
     ...bulk.map((product) => product.seller_phone),
   ]);
@@ -113,6 +143,27 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {localCityDeals.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 pb-10 sm:pb-12 pt-2 sm:pt-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">🔥 Today&apos;s Top Deals in Your City</h2>
+              <p className="text-sm text-gray-500">Nanded</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+            {localCityDeals.map((p) => (
+              <ListingCard
+                key={p.id}
+                product={p}
+                sellerProfileHref={sellerProfileHrefs[p.seller_phone] ?? null}
+                showLocalDealMeta
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="max-w-4xl mx-auto px-4 py-10 sm:py-14">
         <h2 className="text-xl font-bold text-gray-900 text-center mb-8">How it works</h2>

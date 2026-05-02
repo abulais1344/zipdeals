@@ -42,10 +42,15 @@ export const metadata: Metadata = {
       "Discover local clearance deals and bulk stock from verified sellers. Contact directly on WhatsApp and move inventory faster.",
     images: ["/twitter-image"],
   },
+  manifest: "/site.webmanifest",
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
 
