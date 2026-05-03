@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "env:dev": "cp .env.dev .env.local && echo '✓ Switched to dev'",
+    "env:prod": "cp .env.prod .env.local && echo '✓ Switched to prod'"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
