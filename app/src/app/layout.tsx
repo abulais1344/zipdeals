@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Suspense } from "react";
@@ -60,6 +61,7 @@ export default async function RootLayout({
   const isAdminRoute = pathname.startsWith("/admin");
   const isSellerAppRoute =
     pathname.startsWith("/seller/dashboard") ||
+    pathname.startsWith("/seller/account") ||
     pathname.startsWith("/seller/listings") ||
     pathname.startsWith("/sell/new") ||
     pathname.startsWith("/sell/success");
@@ -76,8 +78,27 @@ export default async function RootLayout({
         )}
         <main className={`flex-1 ${isSellerAppRoute ? "" : "pb-20 md:pb-0"}`}>{children}</main>
         {!isSellerAppRoute && (
-          <footer className="site-footer hidden md:block border-t border-gray-100 bg-white py-6 text-center text-xs text-gray-400">
-            © {new Date().getFullYear()} ZipDeals · Local Clearance Deals & Bulk Stock
+          <footer className="site-footer border-t border-gray-100 bg-white py-6 pb-24 text-xs text-gray-400 md:pb-6">
+            <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-500">
+                <Link href="/privacy" className="hover:text-gray-700">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="hover:text-gray-700">
+                  Terms
+                </Link>
+                <Link href="/cookies" className="hover:text-gray-700">
+                  Cookies
+                </Link>
+                <Link href="/seller-terms" className="hover:text-gray-700">
+                  Seller Terms
+                </Link>
+                <Link href="/contact-legal" className="hover:text-gray-700">
+                  Contact & Grievance
+                </Link>
+              </div>
+              <p className="text-center">© {new Date().getFullYear()} ZipDeals · Local Clearance Deals & Bulk Stock</p>
+            </div>
           </footer>
         )}
       </body>

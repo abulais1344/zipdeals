@@ -3,7 +3,7 @@ import IdleLogout from "@/components/IdleLogout";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 interface Props {
-  current: "pending" | "active" | "analytics" | "sellers" | "schema";
+  current: "pending" | "active" | "analytics" | "sellers" | "deletion-requests" | "schema";
 }
 
 const links: Array<{ key: Props["current"]; label: string; href: string }> = [
@@ -11,20 +11,26 @@ const links: Array<{ key: Props["current"]; label: string; href: string }> = [
   { key: "active", label: "Active", href: "/admin/active" },
   { key: "analytics", label: "Analytics", href: "/admin/analytics" },
   { key: "sellers", label: "Sellers", href: "/admin/sellers" },
+  { key: "deletion-requests", label: "Deletion Requests", href: "/admin/deletion-requests" },
   { key: "schema", label: "Schema", href: "/admin/schema" },
 ];
 
 export default async function AdminTopNav({ current }: Props) {
   const supabase = createAdminClient();
 
-  const [{ count: pendingListingCount }, { count: pendingSellerCount }] = await Promise.all([
+  const [{ count: pendingListingCount }, { count: pendingSellerCount }, deletionRequestResult] = await Promise.all([
     supabase.from("products").select("id", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("sellers").select("id", { count: "exact", head: true }).is("verified_at", null),
+    supabase
+      .from("seller_data_deletion_requests")
+      .select("id", { count: "exact", head: true })
+      .in("status", ["pending", "processing"]),
   ]);
 
   const pendingListings = pendingListingCount ?? 0;
   const pendingSellers = pendingSellerCount ?? 0;
-  const pendingApprovals = pendingListings + pendingSellers;
+  const pendingDeletionRequests = deletionRequestResult.error ? 0 : deletionRequestResult.count ?? 0;
+  const pendingApprovals = pendingListings + pendingSellers + pendingDeletionRequests;
 
   return (
     <div className="mb-5 rounded-xl border border-slate-200 bg-white px-3 py-3 sm:px-4">
@@ -63,7 +69,7 @@ export default async function AdminTopNav({ current }: Props) {
               }`}
             >
               {link.label}
-              {(link.key === "pending" || link.key === "sellers") && (
+              {(link.key === "pending" || link.key === "sellers" || link.key === "deletion-requests") && (
                 <span
                   className={`ml-2 inline-flex min-w-[20px] justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
                     active
@@ -71,7 +77,11 @@ export default async function AdminTopNav({ current }: Props) {
                       : "bg-orange-100 text-orange-800"
                   }`}
                 >
-                  {link.key === "pending" ? pendingListings : pendingSellers}
+                  {link.key === "pending"
+                    ? pendingListings
+                    : link.key === "sellers"
+                    ? pendingSellers
+                    : pendingDeletionRequests}
                 </span>
               )}
             </Link>
