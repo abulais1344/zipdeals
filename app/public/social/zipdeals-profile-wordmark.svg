@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Social Profile Wordmark</title>
+  <desc id="desc">ZipDeals social profile logo with the lightning icon and brand name below it.</desc>
+  <defs>
+    <linearGradient id="bolt" x1="170" y1="92" x2="332" y2="418" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="132" fill="#fff7ed" />
+  <circle cx="256" cy="188" r="118" fill="#111827" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" transform="translate(0 -34) scale(0.72) translate(98 52)" fill="url(#bolt)" />
+  <text x="256" y="344" text-anchor="middle" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="50" font-weight="800" letter-spacing="4" fill="#111827">ZIPDEALS</text>
+  <text x="256" y="386" text-anchor="middle" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="6" fill="#f97316">LOCAL DEALS FAST</text>
+</svg>

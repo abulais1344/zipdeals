@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 312" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Facebook Cover</title>
+  <desc id="desc">Facebook cover image for ZipDeals India with contact and social details.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="820" y2="312" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827" />
+      <stop offset="1" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="bolt" x1="78" y1="64" x2="210" y2="252" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="820" height="312" rx="28" fill="url(#bg)" />
+  <circle cx="140" cy="156" r="90" fill="#0f172a" stroke="#f59e0b" stroke-width="8" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" transform="translate(-12 -18) scale(0.42)" fill="url(#bolt)" />
+  <text x="256" y="120" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="3" fill="#ffffff">ZIPDEALS INDIA</text>
+  <text x="256" y="166" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="5" fill="#f3cf68">PREMIUM LOCAL DEALS</text>
+  <text x="256" y="212" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="21" font-weight="600" fill="#cbd5e1">Instagram: @zipdealsindia</text>
+  <text x="256" y="244" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="21" font-weight="600" fill="#cbd5e1">Facebook: Zipdeals India  |  WhatsApp: +91 8421222893</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Highlight Sell</title>
+  <desc id="desc">Instagram highlight cover for sell actions with a plus symbol and branded ring.</desc>
+  <defs>
+    <linearGradient id="bg" x1="84" y1="84" x2="428" y2="428" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eff6ff" />
+      <stop offset="1" stop-color="#dbeafe" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  <circle cx="256" cy="238" r="172" fill="#ffffff" stroke="#111827" stroke-width="20" />
+  <circle cx="256" cy="238" r="112" fill="#111827" />
+  <path d="M256 160c11 0 20 9 20 20v38h38c11 0 20 9 20 20s-9 20-20 20h-38v38c0 11-9 20-20 20s-20-9-20-20v-38h-38c-11 0-20-9-20-20s9-20 20-20h38v-38c0-11 9-20 20-20z" fill="#fb923c" />
+</svg>

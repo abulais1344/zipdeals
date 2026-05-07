@@ -22,6 +22,8 @@ export interface Product {
   sold_token: string;
   views_count: number;
   whatsapp_clicks: number;
+  dealType?: "Limited Time" | "Today Only" | "Clearance";
+  validTill?: string;
   expires_at: string;
   created_at: string;
   updated_at: string;

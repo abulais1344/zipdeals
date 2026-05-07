@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1584 396" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals LinkedIn Banner</title>
+  <desc id="desc">LinkedIn company banner for ZipDeals India with clear brand and contact details.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1584" y2="396" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a" />
+      <stop offset="1" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="ring" x1="72" y1="42" x2="364" y2="332" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4c7" />
+      <stop offset="0.28" stop-color="#f3cf68" />
+      <stop offset="0.6" stop-color="#c79420" />
+      <stop offset="1" stop-color="#ffe49a" />
+    </linearGradient>
+    <linearGradient id="bolt" x1="82" y1="56" x2="330" y2="338" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="1584" height="396" rx="34" fill="url(#bg)" />
+  <circle cx="212" cy="198" r="126" fill="#09090b" stroke="url(#ring)" stroke-width="14" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" transform="translate(20 -6) scale(0.72)" fill="url(#bolt)" />
+  <text x="388" y="170" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="4" fill="#ffffff">ZIPDEALS INDIA</text>
+  <text x="392" y="224" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="8" fill="#f3cf68">FAST-MOVING LOCAL DEALS</text>
+  <text x="392" y="280" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="28" font-weight="600" fill="#cbd5e1">Instagram: @zipdealsindia  |  Facebook: Zipdeals India</text>
+  <text x="392" y="324" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="28" font-weight="600" fill="#cbd5e1">WhatsApp: +91 8421222893</text>
+</svg>

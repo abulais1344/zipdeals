@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Highlight Local</title>
+  <desc id="desc">Instagram highlight cover for local shopping with a map pin in ZipDeals colors.</desc>
+  <defs>
+    <linearGradient id="bg" x1="84" y1="84" x2="428" y2="428" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0fdf4" />
+      <stop offset="1" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="pin" x1="196" y1="120" x2="322" y2="336" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  <circle cx="256" cy="238" r="172" fill="#ffffff" stroke="#16a34a" stroke-width="20" />
+  <path d="M256 138c-49 0-88 39-88 88 0 68 88 148 88 148s88-80 88-148c0-49-39-88-88-88zm0 120a32 32 0 110-64 32 32 0 010 64z" fill="url(#pin)" />
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Social Profile Gold</title>
+  <desc id="desc">Premium gold ZipDeals social profile logo with a metallic ring and lightning bolt.</desc>
+  <defs>
+    <radialGradient id="surface" cx="50%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#2a2f3d" />
+      <stop offset="1" stop-color="#09090b" />
+    </radialGradient>
+    <linearGradient id="goldRing" x1="78" y1="84" x2="434" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff3c4" />
+      <stop offset="0.22" stop-color="#f6d67a" />
+      <stop offset="0.48" stop-color="#c9972b" />
+      <stop offset="0.72" stop-color="#f6d67a" />
+      <stop offset="1" stop-color="#8b5e16" />
+    </linearGradient>
+    <linearGradient id="goldBolt" x1="182" y1="92" x2="330" y2="414" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff7d6" />
+      <stop offset="0.32" stop-color="#f5cf67" />
+      <stop offset="0.7" stop-color="#c8911d" />
+      <stop offset="1" stop-color="#fff1b1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="136" fill="#0f172a" />
+  <circle cx="256" cy="256" r="206" fill="url(#surface)" />
+  <circle cx="256" cy="256" r="192" fill="none" stroke="url(#goldRing)" stroke-width="22" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" fill="url(#goldBolt)" />
+</svg>
