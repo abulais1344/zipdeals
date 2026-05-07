@@ -221,8 +221,9 @@ export default function ListingCard({ product, sellerProfileHref, showLocalDealM
           <WhatsAppButton
             product={product}
             source="local_city_deals"
-            ctaLabel="WhatsApp / Contact Seller"
-            className="mt-auto pt-2 py-2 text-sm rounded-lg"
+            ctaLabel="WhatsApp Seller"
+            size="sm"
+            className="mt-auto pt-2"
           />
         )}
       </div>

@@ -1,8 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
 import { CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
 
 interface Props {
   params: Promise<{ token: string }>;

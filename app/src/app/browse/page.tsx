@@ -14,12 +14,45 @@ interface Props {
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
-  const city = params.city ?? "India";
-  const category = params.category ?? "all categories";
-  const query = params.q ?? "";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://zipdeals.in";
+  const city = params.city && CITIES.includes(params.city as typeof CITIES[number]) ? params.city : null;
+  const category = params.category && CATEGORIES.includes(params.category as typeof CATEGORIES[number]) ? params.category : null;
+  const taluka = params.taluka
+    ? (() => {
+        const talukasList = city && (TALUKAS as Record<string, string[]>)[city]
+          ? (TALUKAS as Record<string, string[]>)[city]
+          : [];
+        return talukasList.includes(params.taluka!) ? params.taluka : null;
+      })()
+    : null;
+  const query = params.q?.trim() ?? "";
+  const minPrice = params.minPrice && /^\d+$/.test(params.minPrice) ? params.minPrice : null;
+  const maxPrice = params.maxPrice && /^\d+$/.test(params.maxPrice) ? params.maxPrice : null;
+  const sort = params.sort && ["newest", "cheapest", "expensive", "discount"].includes(params.sort)
+    ? params.sort
+    : "newest";
+  const page = params.page && /^\d+$/.test(params.page) && params.page !== "1" ? params.page : null;
+
+  const canonicalParams = new URLSearchParams();
+  if (query) canonicalParams.set("q", query);
+  if (city) canonicalParams.set("city", city);
+  if (category) canonicalParams.set("category", category);
+  if (taluka) canonicalParams.set("taluka", taluka);
+  if (minPrice) canonicalParams.set("minPrice", minPrice);
+  if (maxPrice) canonicalParams.set("maxPrice", maxPrice);
+  if (sort !== "newest") canonicalParams.set("sort", sort);
+  if (page) canonicalParams.set("page", page);
+
+  const canonical = canonicalParams.toString()
+    ? `${baseUrl}/browse?${canonicalParams.toString()}`
+    : `${baseUrl}/browse`;
+
   return {
-    title: `${query ? `"${query}" - ` : ""}Clearance deals on ${category} in ${city} | ZipDeals`,
-    description: `Browse genuine clearance deals and bulk stock on ${category} near ${city}. Contact sellers directly on WhatsApp.`,
+    title: `${query ? `"${query}" - ` : ""}Clearance deals on ${category ?? "all categories"} in ${city ?? "India"} | ZipDeals`,
+    description: `Browse genuine clearance deals and bulk stock on ${category ?? "all categories"} near ${city ?? "India"}. Contact sellers directly on WhatsApp.`,
+    alternates: {
+      canonical,
+    },
   };
 }
 

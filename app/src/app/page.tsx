@@ -152,14 +152,15 @@ export default async function HomePage() {
               <p className="text-sm text-gray-500">Nanded</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 md:grid-cols-4 sm:gap-4">
             {localCityDeals.map((p) => (
-              <ListingCard
-                key={p.id}
-                product={p}
-                sellerProfileHref={sellerProfileHrefs[p.seller_phone] ?? null}
-                showLocalDealMeta
-              />
+              <div key={p.id} className="min-w-[200px] w-[200px] sm:min-w-0 sm:w-auto flex-shrink-0 snap-start">
+                <ListingCard
+                  product={p}
+                  sellerProfileHref={sellerProfileHrefs[p.seller_phone] ?? null}
+                  showLocalDealMeta
+                />
+              </div>
             ))}
           </div>
         </section>

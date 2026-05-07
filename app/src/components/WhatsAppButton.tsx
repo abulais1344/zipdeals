@@ -9,6 +9,7 @@ interface Props {
   className?: string;
   source?: string;
   ctaLabel?: string;
+  size?: "sm" | "md";
 }
 
 function buildWhatsAppUrl(product: Product): string {
@@ -25,7 +26,7 @@ function isMobileViewport() {
   return window.matchMedia("(max-width: 767px)").matches;
 }
 
-export default function WhatsAppButton({ product, className, source = "listing_detail", ctaLabel }: Props) {
+export default function WhatsAppButton({ product, className, source = "listing_detail", ctaLabel, size = "md" }: Props) {
   async function handleClick() {
     const supabase = createClient();
 
@@ -46,12 +47,17 @@ export default function WhatsAppButton({ product, className, source = "listing_d
     window.open(buildWhatsAppUrl(product), "_blank", "noopener,noreferrer");
   }
 
+  const sizeClasses =
+    size === "sm"
+      ? "py-2 text-xs gap-1.5 font-semibold rounded-lg"
+      : "py-3.5 text-base gap-2 font-bold rounded-xl shadow-sm";
+
   return (
     <button
       onClick={handleClick}
-      className={`w-full flex items-center justify-center gap-2 py-3.5 bg-[#25D366] hover:bg-[#1ebe5d] active:bg-[#18b454] active:scale-[0.99] text-white font-bold rounded-xl text-base transition-all shadow-sm ${className ?? ""}`}
+      className={`w-full flex items-center justify-center bg-[#25D366] hover:bg-[#1ebe5d] active:bg-[#18b454] active:scale-[0.99] text-white transition-all ${sizeClasses} ${className ?? ""}`}
     >
-      <MessageCircle size={20} />
+      <MessageCircle size={size === "sm" ? 14 : 20} />
       {ctaLabel ?? "Chat Now & Get Best Price"}
     </button>
   );

@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { CITIES, CATEGORIES } from "@/lib/constants";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -8,12 +7,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient();
   const { data: rawProducts } = await supabase
     .from("products")
-    .select("id, updated_at")
+    .select("id, updated_at, city, category")
     .eq("status", "active")
     .order("updated_at", { ascending: false })
-    .limit(1000);
+    .limit(5000);
 
-  const products = rawProducts as { id: string; updated_at: string }[] | null;
+  const products = rawProducts as { id: string; updated_at: string; city: string; category: string }[] | null;
 
   const productUrls: MetadataRoute.Sitemap = (products ?? []).map((p) => ({
     url: `${baseUrl}/listings/${p.id}`,
@@ -22,13 +21,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const cityUrls: MetadataRoute.Sitemap = CITIES.map((city) => ({
+  const activeCities = Array.from(new Set((products ?? []).map((p) => p.city).filter(Boolean))).sort();
+  const activeCategories = Array.from(new Set((products ?? []).map((p) => p.category).filter(Boolean))).sort();
+
+  const cityUrls: MetadataRoute.Sitemap = activeCities.map((city) => ({
     url: `${baseUrl}/browse?city=${encodeURIComponent(city)}`,
     changeFrequency: "hourly",
     priority: 0.8,
   }));
 
-  const categoryUrls: MetadataRoute.Sitemap = CATEGORIES.map((cat) => ({
+  const categoryUrls: MetadataRoute.Sitemap = activeCategories.map((cat) => ({
     url: `${baseUrl}/browse?category=${encodeURIComponent(cat)}`,
     changeFrequency: "hourly",
     priority: 0.8,
