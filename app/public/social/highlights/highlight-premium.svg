@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Highlight Premium</title>
+  <desc id="desc">Instagram highlight cover for premium listings using a black and gold brand treatment.</desc>
+  <defs>
+    <radialGradient id="surface" cx="50%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#2b2b2f" />
+      <stop offset="1" stop-color="#09090b" />
+    </radialGradient>
+    <linearGradient id="gold" x1="104" y1="92" x2="420" y2="414" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4c7" />
+      <stop offset="0.28" stop-color="#f3cf68" />
+      <stop offset="0.6" stop-color="#c79420" />
+      <stop offset="1" stop-color="#ffe49a" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="#050505" />
+  <circle cx="256" cy="238" r="172" fill="url(#surface)" stroke="url(#gold)" stroke-width="20" />
+  <path d="M256 140l27 54 60 9-43 42 10 59-54-28-54 28 10-59-43-42 60-9z" fill="url(#gold)" />
+</svg>

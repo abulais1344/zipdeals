@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Social Banner Black Luxury</title>
+  <desc id="desc">Wide social banner for ZipDeals in a premium black and gold style.</desc>
+  <defs>
+    <linearGradient id="bg" x1="120" y1="40" x2="1380" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827" />
+      <stop offset="1" stop-color="#020617" />
+    </linearGradient>
+    <radialGradient id="glow" cx="26%" cy="50%" r="40%">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity="0.26" />
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="gold" x1="180" y1="120" x2="420" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4c7" />
+      <stop offset="0.28" stop-color="#f3cf68" />
+      <stop offset="0.6" stop-color="#c79420" />
+      <stop offset="1" stop-color="#ffe49a" />
+    </linearGradient>
+  </defs>
+  <rect width="1500" height="500" rx="42" fill="url(#bg)" />
+  <ellipse cx="320" cy="250" rx="260" ry="180" fill="url(#glow)" />
+  <circle cx="320" cy="250" r="138" fill="#09090b" stroke="url(#gold)" stroke-width="14" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" transform="translate(44 8) scale(0.82)" fill="url(#gold)" />
+  <text x="530" y="226" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="110" font-weight="800" letter-spacing="6" fill="#ffffff">ZIPDEALS</text>
+  <text x="533" y="290" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="10" fill="#f3cf68">PREMIUM LOCAL DEALS</text>
+  <text x="533" y="348" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="26" font-weight="600" fill="#cbd5e1">Instagram: @zipdealsindia  |  Facebook: Zipdeals India</text>
+  <text x="533" y="390" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="26" font-weight="600" fill="#cbd5e1">WhatsApp: +91 8421222893</text>
+</svg>

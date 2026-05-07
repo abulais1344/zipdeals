@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Social Profile Black Luxury</title>
+  <desc id="desc">Luxury black ZipDeals social profile with refined gold accents and compact wordmark for safe circular cropping.</desc>
+  <defs>
+    <radialGradient id="panel" cx="50%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#2b2b2f" />
+      <stop offset="1" stop-color="#09090b" />
+    </radialGradient>
+    <linearGradient id="gold" x1="108" y1="78" x2="384" y2="404" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4c7" />
+      <stop offset="0.28" stop-color="#f3cf68" />
+      <stop offset="0.6" stop-color="#c79420" />
+      <stop offset="1" stop-color="#ffe49a" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="136" fill="#050505" />
+  <circle cx="256" cy="190" r="118" fill="url(#panel)" stroke="url(#gold)" stroke-width="12" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" transform="translate(0 -36) scale(0.7) translate(108 62)" fill="url(#gold)" />
+  <text x="256" y="340" text-anchor="middle" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="42" font-weight="700" letter-spacing="3" fill="url(#gold)">ZIPDEALS</text>
+  <text x="256" y="378" text-anchor="middle" font-family="Avenir Next, Montserrat, Poppins, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="5" fill="#d4af37">PREMIUM PICKS</text>
+</svg>

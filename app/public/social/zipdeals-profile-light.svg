@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Social Profile Light</title>
+  <desc id="desc">Light circular ZipDeals profile logo with dark bolt and orange outline.</desc>
+  <rect width="512" height="512" rx="120" fill="#fff7ed" />
+  <circle cx="256" cy="256" r="208" fill="#ffffff" stroke="#f97316" stroke-width="22" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" fill="#111827" />
+</svg>

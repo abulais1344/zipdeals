@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ZipDeals Highlight Deals</title>
+  <desc id="desc">Instagram highlight cover for deals with a bold lightning badge.</desc>
+  <defs>
+    <linearGradient id="bg" x1="84" y1="84" x2="428" y2="428" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff7ed" />
+      <stop offset="1" stop-color="#ffedd5" />
+    </linearGradient>
+    <linearGradient id="ring" x1="104" y1="92" x2="420" y2="414" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  <circle cx="256" cy="256" r="172" fill="#ffffff" stroke="url(#ring)" stroke-width="20" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" fill="#111827" />
+</svg>
