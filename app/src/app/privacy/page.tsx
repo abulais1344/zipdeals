@@ -76,7 +76,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-base font-semibold text-gray-900">7. Contact</h2>
           <p className="mt-2">
-            For privacy requests, contact us at <a href="mailto:privacy@zipdeals.in" className="font-medium text-orange-600 hover:text-orange-700">privacy@zipdeals.in</a>. You can also use the details on the <Link href="/contact-legal" className="font-medium text-orange-600 hover:text-orange-700">Contact & Grievance</Link> page.
+            For privacy requests, contact us at <a href="mailto:zipdealsindia@gmail.com" className="font-medium text-orange-600 hover:text-orange-700">zipdealsindia@gmail.com</a>. You can also use the details on the <Link href="/contact-legal" className="font-medium text-orange-600 hover:text-orange-700">Contact & Grievance</Link> page for WhatsApp and Instagram support channels.
           </p>
         </section>
       </div>
