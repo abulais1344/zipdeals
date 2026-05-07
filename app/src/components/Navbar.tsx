@@ -15,6 +15,7 @@ export default async function Navbar({ forceAdminTheme = false }: Props) {
   const pathname = headerStore.get("x-pathname") ?? headerStore.get("next-url") ?? "";
   const isSellerAppRoute =
     pathname.startsWith("/seller/dashboard") ||
+    pathname.startsWith("/seller/account") ||
     pathname.startsWith("/seller/listings") ||
     pathname.startsWith("/sell/new") ||
     pathname.startsWith("/sell/success");

@@ -3,7 +3,7 @@ import { getSellerListingsForDashboard } from "@/lib/seller-listings";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Eye, MessageCircle, Edit } from "lucide-react";
+import { LayoutDashboard, Eye, MessageCircle, Edit, UserCircle2 } from "lucide-react";
 import SellerLogoutButton from "@/components/SellerLogoutButton";
 import MarkAsSoldButton from "@/components/MarkAsSoldButton";
 import IdleLogout from "@/components/IdleLogout";
@@ -68,6 +68,13 @@ export default async function SellerDashboard() {
             </div>
           </div>
           <div className="flex items-center gap-2 ml-auto">
+            <Link
+              href="/seller/account"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <UserCircle2 size={16} />
+              Account
+            </Link>
             <Link
               href="/browse"
               className="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
@@ -140,6 +147,25 @@ export default async function SellerDashboard() {
         )}
 
         <SellerRecoveryEmailCard initialEmail={seller?.email ?? null} />
+
+        <section className="mt-6 mb-8 rounded-xl border border-gray-200 bg-white p-4 sm:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Account</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">Manage your profile and privacy options</p>
+              <p className="mt-1 text-sm text-gray-600">
+                {seller?.email ?? "No recovery email set"} · {seller?.phone ?? "Phone unavailable"}
+              </p>
+            </div>
+            <Link
+              href="/seller/account"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-700 hover:bg-orange-100"
+            >
+              <UserCircle2 size={16} />
+              Open Account
+            </Link>
+          </div>
+        </section>
 
         {/* Listings Table */}
         {sellerListings.length === 0 ? (

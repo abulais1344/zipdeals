@@ -90,5 +90,5 @@ export type City = (typeof CITIES)[number];
 export type Taluka = string;
 
 export const LISTING_EXPIRY_DAYS = 30;
-export const MAX_IMAGES = 5;
+export const MAX_IMAGES = 6;
 export const MAX_IMAGE_SIZE_MB = 5;

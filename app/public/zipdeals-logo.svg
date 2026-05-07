@@ -1,12 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">ZipDeals Lightning Logo</title>
-  <desc id="desc">Circular dark logo with orange lightning bolt for ZipDeals brand.</desc>
-  <defs>
-    <linearGradient id="bolt" x1="170" y1="92" x2="332" y2="418" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#fb923c" />
-      <stop offset="1" stop-color="#ea580c" />
-    </linearGradient>
-  </defs>
-  <circle cx="256" cy="256" r="236" fill="#111827" />
-  <path d="M286 72L154 282h94l-18 158 128-212h-92z" fill="url(#bolt)" />
+  <desc id="desc">Circular orange logo with white lightning bolt for ZipDeals brand.</desc>
+  <circle cx="256" cy="256" r="236" fill="#f97316" />
+  <path d="M286 72L154 282h94l-18 158 128-212h-92z" fill="#ffffff" />
 </svg>
